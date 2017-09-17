@@ -6,41 +6,25 @@ import presentaciones.*
 
 describe "Test generales"{
 	 
-	var fender
-	var gibsonSana
-	var gibsonNoSana
-	var cancionCisne
-	var cancionLaFamilia
-	var presentacionLunaPark
-	var presentacionLaTrastienda
+	const fender
+	const gibsonSana
+	const gibsonNoSana
+	const cancionCisne
+	const cancionLaFamilia
+	const presentacionLunaPark
+	const presentacionLaTrastienda
 	fixture {
-		fender = new Guitarra()
-		fender.valor(10)
-		fender.modelo("Fender")
-		gibsonSana = new Guitarra()
-		gibsonSana.valor(15)
-		gibsonSana.modelo("Gibson sana")
-		gibsonNoSana = new Guitarra()
-		gibsonNoSana.valor(5)
-		gibsonNoSana.modelo("Gibson no sana")
-		cancionCisne = new Cancion()
-		cancionCisne.titulo("Cisne")
-		cancionCisne.duracion(312)
+		fender = new Guitarra(10)
+		gibsonSana = new Guitarra(15)
+		gibsonNoSana = new Guitarra(5)
+		cancionCisne = new Cancion("Cisne", 312)
 		cancionCisne.letra("Hoy el viento se
 							abrió quedó vacío el aire una vez más y el manantial brotó y nadie está
 							aquí y puedo ver que solo estallan las hojas al brillar")
-		cancionLaFamilia = new Cancion()
-		cancionLaFamilia.titulo("La familia")
-		cancionLaFamilia.duracion(264)
+		cancionLaFamilia = new Cancion("La familia", 264)
 		cancionLaFamilia.letra("Quiero brindar por mi gente sencilla, por el amor brindo por la familia")
-		presentacionLunaPark = new Presentacion()
-		presentacionLunaPark.fecha(new Date(20,4,2017))
-		presentacionLunaPark.establecimiento(lunaPark)
-		presentacionLunaPark.cantantes(#{luisAlberto, joaquin, lucia})
-		presentacionLaTrastienda = new Presentacion()
-		presentacionLaTrastienda.fecha(new Date(15,11,2017))
-		presentacionLaTrastienda.establecimiento(laTrastienda)
-		presentacionLaTrastienda.cantantes(#{luisAlberto, joaquin, lucia})
+		presentacionLunaPark = new Presentacion(new Date(20,4,2017), lunaPark, #{luisAlberto, joaquin, lucia})
+		presentacionLaTrastienda = new Presentacion(new Date(15,11,2017), laTrastienda, #{luisAlberto, joaquin, lucia})
 	}
 	
 	test "Joaquín canta en el grupo Pimpinela. Queremos conocer su habilidad" {
@@ -98,7 +82,7 @@ describe "Test generales"{
 	}
 	test "Modificar la presentación de la Trastienda para que solo actúe Joaquín.
 	Queremos saber cuánto cobra Joaquín por la presentación de la Trastienda del 15/11/2017"{
-	presentacionLaTrastienda.cantantes(#{joaquin})
+		presentacionLaTrastienda.cantantes(#{joaquin})
 		assert.equals(100,joaquin.ganancia(presentacionLaTrastienda))
 	}
 	test "Queremos saber la capacidad de La Trastienda para el 05 de agosto del 2017"{
