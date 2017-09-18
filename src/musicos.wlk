@@ -1,25 +1,20 @@
-import albumes.*
-import canciones.*
+//import albumes.*
+//import canciones.*
 class Musico{
-	
-}
-
-class MusicoDeGrupo{
 	var tocaEnGrupo
 	const habilidadBase
 	const habilidadSiTocaEnGrupo
-	const albumes
-	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo, _albumes){
+	const albumes = #{}
+	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo){
 		habilidadBase = _habilidadBase
 		habilidadSiTocaEnGrupo = _habilidadSiTocaEnGrupo
 		tocaEnGrupo = _tocaEnGrupo
-		albumes = _albumes
 	}
 	method tocaEnGrupo() = tocaEnGrupo
 	method tocaEnGrupo(_tocaEnGrupo) {tocaEnGrupo = _tocaEnGrupo}
-	
 	method habilidadBase() = habilidadBase
 	method habilidadSiTocaEnGrupo() = habilidadSiTocaEnGrupo
+	method albumes() = albumes
 	
 	method habilidad() =
 		if (tocaEnGrupo)
@@ -27,13 +22,8 @@ class MusicoDeGrupo{
 		else
 			return habilidadBase
 		
-	method interpretaBien(cancion) = cancion.duracion() > 300  //300 segundos
-	 
-	method ganancia(presentacion) =	
-		 if (presentacion.esUnicoEnPresentacion(self))
-		 	return 100
-		 else 
-		 	return 50		
+	method interpretaBien(cancion) = true
+	method ganancia(presentacion) = 0
 		 	
 	method esMinimalista() = albumes.all {album => album.todasLasCancionesSonCortas()}
 	method duracionDeObra() = 
@@ -42,51 +32,52 @@ class MusicoDeGrupo{
 		else
 			return 0
 	method laPego() = albumes.all {album => album.buenaVenta()}
-	method cancionesContienenPalabra(palabra) = albumes.filter {album => album.contienePalabra(palabra)}
 }
 
-class VocalistaPopular{
-	var tocaEnGrupo
-	const habilidadBase
-	const habilidadSiTocaEnGrupo
+class MusicoDeGrupo inherits Musico{
+	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo) =
+		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo)
+	override method interpretaBien(cancion) = cancion.duracion() > 300  //300 segundos 
+	override method ganancia(presentacion) =	
+		 if (presentacion.esUnicoEnPresentacion(self))
+		 	return 100
+		 else 
+		 	return 50		
+}
+
+class VocalistaPopular inherits Musico{
 	const palabraMagica
-	const albumes
-	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo, _palabraMagica, _albumes){
-		habilidadBase = _habilidadBase
-		habilidadSiTocaEnGrupo = _habilidadSiTocaEnGrupo
-		tocaEnGrupo = _tocaEnGrupo
-		palabraMagica = _palabraMagica
-		albumes = _albumes
-	}
-	method tocaEnGrupo() = tocaEnGrupo
-	method tocaEnGrupo(_tocaEnGrupo) {tocaEnGrupo = _tocaEnGrupo}
-	
-	method habilidadBase() = habilidadBase	
-	method habilidadSiTocaEnGrupo() = habilidadSiTocaEnGrupo	
+	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo, _palabraMagica) =
+		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo){
+			palabraMagica = _palabraMagica
+		}
 	method palabraMagica() = palabraMagica
-	method albumes() = albumes
-			
-	method habilidad() =
-		if (tocaEnGrupo)
-			return habilidadBase + habilidadSiTocaEnGrupo
-		else
-			return habilidadBase
 		
-	method interpretaBien(cancion) = cancion.letraContiene(palabraMagica)
-	method ganancia(presentacion) = 
+	override method interpretaBien(cancion) = cancion.letraContiene(palabraMagica)
+	override method ganancia(presentacion) = 
 		if (presentacion.establecimiento().esConcurrido(presentacion.fecha()))
 			return 500
 		else
-			return 400 
-	
-	method esMinimalista() = albumes.all {album => album.todasLasCancionesSonCortas()}
-	method duracionDeObra() = albumes.sum {album => album.duracion()}
-	method laPego() = albumes.all {album => album.buenaVenta()}
-	method cancionesContienenPalabra(palabra) =
-		albumes.canciones().filter {cancion => cancion.letraContiene(palabra)}
-		
+			return 400 	
+//	method cancionesContienenPalabra(palabra) =
+//		albumes.canciones().filter {cancion => cancion.letraContiene(palabra)}	
 }
 
+object luisAlberto inherits Musico(8,0,false){
+	var guitarra
+	const fechaLimite = new Date(1,9,2017)
+	method guitarra() = guitarra
+	method guitarra(_guitarra) {guitarra = _guitarra}
+	
+	override method habilidad() = 100.min(habilidadBase * guitarra.valor()) 
+
+	override method ganancia(presentacion) =
+		if (presentacion.fecha() < fechaLimite)
+			return 1000
+		else
+			return 1200
+}
+/*
 object joaquin{
 	var habilidad = 20
 	var grupo = "Pimpinela"
@@ -130,21 +121,8 @@ object lucia {
 		else
 			return 400 //ncuello
 }
+*/
 
-object luisAlberto {
-	var guitarra
-	var fechaLimite = new Date(1,9,2017)
-	method guitarra() = guitarra
-	method guitarra(_guitarra) {guitarra = _guitarra}
-	
-	method habilidad() = 100.min(8 * guitarra.valor()) 
-	method interpretaBien(cancion) = true
-	method ganancia(presentacion) =
-		if (presentacion.fecha() < fechaLimite)
-			return 1000
-		else
-			return 1200
-}
 
 	
 	

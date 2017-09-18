@@ -6,10 +6,10 @@ import presentaciones.*
 import albumes.*
 
 describe "Test generales"{
-	const joaquin2 
-	const kike
-	const lucia2
+	const joaquin
+	const lucia
 	const soledad
+	const kike
 	const fender
 	const gibsonSana
 	const gibsonNoSana
@@ -21,12 +21,15 @@ describe "Test generales"{
 	const cancionCrisantemo
 	const albumEspecialLaFamilia
 	const albumLaSole
-	const presentacionLunaPark
-	const presentacionLaTrastienda
 	const albumParaLosArboles
 	const albumJustCrisantemo
+	const presentacionLunaPark
+	const presentacionLaTrastienda
 	fixture {
-		
+		joaquin = new MusicoDeGrupo(20, 5, true)
+		kike = new MusicoDeGrupo(60, 20, true)
+		lucia = new VocalistaPopular(70, -20, true, "familia")
+		soledad = new VocalistaPopular(55, 0, false, "amor")
 		fender = new Guitarra(10)
 		gibsonSana = new Guitarra(15)
 		gibsonNoSana = new Guitarra(5)
@@ -54,21 +57,21 @@ describe "Test generales"{
 		albumEspecialLaFamilia = new Album(new Date(17,6,1992), 100000, 89000, #{cancionLaFamilia})
 		albumLaSole = new Album(new Date(4,2,2005), 200000, 130000, #{cancionEres, cancionCorazonAmericano})
 		albumParaLosArboles = new Album(new Date(31,3,2003), 50000, 49000, #{cancionCisne, cancionAlmaDeDiamante})
-		albumJustCrisantemo = new Album(new Date(5,12,2007), 28000, 27500, #{cancionEres, cancionCrisantemo})
+		albumJustCrisantemo = new Album(new Date(5,12,2007), 28000, 27500, #{cancionCrisantemo})
 		presentacionLunaPark = new Presentacion(new Date(20,4,2017), lunaPark, #{luisAlberto, joaquin, lucia})
 		presentacionLaTrastienda = new Presentacion(new Date(15,11,2017), laTrastienda, #{luisAlberto, joaquin, lucia})
-		joaquin2 = new MusicoDeGrupo(20, 5, true, #{albumEspecialLaFamilia})
-		kike = new MusicoDeGrupo(60, 20, true, null)
-		lucia2 = new VocalistaPopular(70, -20, true, "familia", null)
-		soledad = new VocalistaPopular(55, 0, false, "amor", #{albumLaSole})
+		joaquin.albumes().add(albumEspecialLaFamilia)
+		soledad.albumes().add(albumLaSole)
+		luisAlberto.albumes().add(albumParaLosArboles)
+		luisAlberto.albumes().add(albumJustCrisantemo)
 	}
 	
-	test "Joaquín canta en el grupo Pimpinela. Queremos conocer su habilidad" {
+	test "Joaquín canta en el grupo Pimpinela. Queremos conocer su habilidad" {	
 		assert.equals(25,joaquin.habilidad())
 	}
 	test "Joaquín canta en el grupo Pimpinela, y decide lanzar su carrera solista (deja el grupo). Queremos conocer
 	su habilidad."{
-		joaquin.grupo(null)
+		joaquin.tocaEnGrupo(false)
 		assert.equals(20, joaquin.habilidad())
 	}
 	test "Lucía canta en el grupo Pimpinela. Queremos saber
@@ -77,7 +80,7 @@ describe "Test generales"{
 	}
 	test "Lucía canta en el grupo Pimpinela, y lanza su carrera solista (deja el grupo). Queremos conocer su
 	habilidad."{
-		lucia.grupo(null)
+		lucia.tocaEnGrupo(false)
 		assert.equals(70, lucia.habilidad())
 	}
 	test "Luis Alberto toca con la Fender. Queremos saber su
@@ -157,14 +160,20 @@ describe "Test generales"{
 	test "Saber si Soledad es minimalista"{
 		assert.that(soledad.esMinimalista())
 	}
+	test "Saber si Luis Alberto es minimalista"{
+		assert.notThat(luisAlberto.esMinimalista())
+	}
 	test "Saber si Joaquín es minimalista"{
-		assert.notThat(joaquin2.esMinimalista())
+		assert.notThat(joaquin.esMinimalista())
 	}
 	test "Saber cuántos segundos dura la obra de Kike"{
 		assert.equals(0, kike.duracionDeObra())
 	}
 	test "Saber cuántos segundos dura la obra de Soledad"{
 		assert.equals(299, soledad.duracionDeObra())
+	}
+	test "Saber cuántos segundos dura la obra de Luis Alberto"{
+		assert.equals(703, luisAlberto.duracionDeObra())
 	}
 	test "Saber qué canción es más larga del álbum “Para los árboles"{
 		assert.equals(cancionAlmaDeDiamante, albumParaLosArboles.cancionMasLarga())
@@ -175,11 +184,14 @@ describe "Test generales"{
 	test "Saber qué canción es más larga del álbum “Especial La Familia"{
 		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLarga())
 	}
+	test "Queremos saber si Luis Alberto la pegó"{
+		assert.that(luisAlberto.laPego())
+	}
 	test "Queremos saber si Soledad la pegó"{
 		assert.notThat(soledad.laPego())
 	}
 	test "Queremos saber si Joaquín la pegó"{
-		assert.that(joaquin2.laPego())
+		assert.that(joaquin.laPego())
 	}
 	test "Soledad que canciones contienen soñamos"{
 		assert.equals(cancionCorazonAmericano, soledad.cancionesContienenPalabra("soñamos"))
