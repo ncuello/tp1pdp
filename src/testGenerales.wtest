@@ -3,28 +3,64 @@ import canciones.*
 import guitarras.*
 import establecimientos.*
 import presentaciones.*
+import albumes.*
 
 describe "Test generales"{
-	 
+	const joaquin2 
+	const kike
+	const lucia2
+	const soledad
 	const fender
 	const gibsonSana
 	const gibsonNoSana
 	const cancionCisne
 	const cancionLaFamilia
+	const cancionEres
+	const cancionCorazonAmericano
+	const cancionAlmaDeDiamante
+	const cancionCrisantemo
+	const albumEspecialLaFamilia
+	const albumLaSole
 	const presentacionLunaPark
 	const presentacionLaTrastienda
+	const albumParaLosArboles
+	const albumJustCrisantemo
 	fixture {
+		
 		fender = new Guitarra(10)
 		gibsonSana = new Guitarra(15)
 		gibsonNoSana = new Guitarra(5)
-		cancionCisne = new Cancion("Cisne", 312)
-		cancionCisne.letra("Hoy el viento se
+		cancionCisne = new Cancion("Cisne", 312, "Hoy el viento se
 							abrió quedó vacío el aire una vez más y el manantial brotó y nadie está
 							aquí y puedo ver que solo estallan las hojas al brillar")
-		cancionLaFamilia = new Cancion("La familia", 264)
-		cancionLaFamilia.letra("Quiero brindar por mi gente sencilla, por el amor brindo por la familia")
+		cancionLaFamilia = new Cancion("La familia", 264, "Quiero brindar por mi gente sencilla, 
+								por el amor brindo por la familia")
+		cancionEres = new Cancion("Eres", 145, "Eres lo mejor que me
+							pasó en la vida, no tengo duda, no habrá más nada después de ti. Eres
+							lo que le dio brillo al día a día, y así será por siempre, no cambiará,
+							hasta el final de mis días.")
+		cancionCorazonAmericano = new Cancion("Corazón americano", 154, "Canta
+										corazón, canta más alto, que tu pena al fin se va marchando, el nuevo
+										milenio ha de encontrarnos, junto corazón, como soñamos.")
+		cancionAlmaDeDiamante = new Cancion("Alma de diamante", 216, "Ven a mí
+										con tu dulce luz alma de diamante. Y aunque el sol se nuble
+										después sos alma de diamante. Cielo o piel silencio o verdad sos
+										alma de diamante. Por eso ven así con la humanidad alma de
+										diamante")
+		cancionCrisantemo = new Cancion("Crisantemo", 175, "Tócame junto a
+									esta pared, yo quede por aquí... cuando no hubo más luz...
+									quiero mirar a través de mi piel... Crisantemo, que se abrió...
+									encuentra el camino hacia el cielo")
+		albumEspecialLaFamilia = new Album(new Date(17,6,1992), 100000, 89000, #{cancionLaFamilia})
+		albumLaSole = new Album(new Date(4,2,2005), 200000, 130000, #{cancionEres, cancionCorazonAmericano})
+		albumParaLosArboles = new Album(new Date(31,3,2003), 50000, 49000, #{cancionCisne, cancionAlmaDeDiamante})
+		albumJustCrisantemo = new Album(new Date(5,12,2007), 28000, 27500, #{cancionEres, cancionCrisantemo})
 		presentacionLunaPark = new Presentacion(new Date(20,4,2017), lunaPark, #{luisAlberto, joaquin, lucia})
 		presentacionLaTrastienda = new Presentacion(new Date(15,11,2017), laTrastienda, #{luisAlberto, joaquin, lucia})
+		joaquin2 = new MusicoDeGrupo(20, 5, true, #{albumEspecialLaFamilia})
+		kike = new MusicoDeGrupo(60, 20, true, null)
+		lucia2 = new VocalistaPopular(70, -20, true, "familia", null)
+		soledad = new VocalistaPopular(55, 0, false, "amor", #{albumLaSole})
 	}
 	
 	test "Joaquín canta en el grupo Pimpinela. Queremos conocer su habilidad" {
@@ -110,5 +146,42 @@ describe "Test generales"{
 	}
 	test "Queremos saber el costo de la presentación de la Trastienda el 15/11/2017"{
 		assert.equals(1650, presentacionLaTrastienda.costoTotal())
+	}
+	/* A PARTIR DE ACÁ ES LA SEGUNDA PARTE */
+	test "Saber si la canción “Crisantemo” es corta"{
+		assert.that(cancionCrisantemo.esCorta())
+	}
+	test "Saber si la canción “Alma de diamante” es corta"{
+		assert.notThat(cancionAlmaDeDiamante.esCorta())
+	}
+	test "Saber si Soledad es minimalista"{
+		assert.that(soledad.esMinimalista())
+	}
+	test "Saber si Joaquín es minimalista"{
+		assert.notThat(joaquin2.esMinimalista())
+	}
+	test "Saber cuántos segundos dura la obra de Kike"{
+		assert.equals(0, kike.duracionDeObra())
+	}
+	test "Saber cuántos segundos dura la obra de Soledad"{
+		assert.equals(299, soledad.duracionDeObra())
+	}
+	test "Saber qué canción es más larga del álbum “Para los árboles"{
+		assert.equals(cancionAlmaDeDiamante, albumParaLosArboles.cancionMasLarga())
+	}
+	test "Saber qué canción es más larga del álbum “La Sole"{
+		assert.equals(cancionEres, albumLaSole.cancionMasLarga())
+	}
+	test "Saber qué canción es más larga del álbum “Especial La Familia"{
+		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLarga())
+	}
+	test "Queremos saber si Soledad la pegó"{
+		assert.notThat(soledad.laPego())
+	}
+	test "Queremos saber si Joaquín la pegó"{
+		assert.that(joaquin2.laPego())
+	}
+	test "Soledad que canciones contienen soñamos"{
+		assert.equals(cancionCorazonAmericano, soledad.cancionesContienenPalabra("soñamos"))
 	}
 }
