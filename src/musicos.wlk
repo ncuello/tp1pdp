@@ -1,6 +1,6 @@
-//import albumes.*
-//import canciones.*
-class Musico{
+import albumes.*
+import canciones.*
+class Musico{ 
 	var tocaEnGrupo
 	const habilidadBase
 	const habilidadSiTocaEnGrupo
@@ -22,22 +22,25 @@ class Musico{
 		else
 			return habilidadBase
 		
-	method interpretaBien(cancion) = true
-	method ganancia(presentacion) = 0
+	method interpretaBien(cancion)
+	method ganancia(presentacion)
 		 	
 	method esMinimalista() = albumes.all {album => album.todasLasCancionesSonCortas()}
 	method duracionDeObra() = 
-		if(albumes != null)
+		if(!albumes.isEmpty())
 			albumes.sum {album => album.duracion()}
 		else
 			return 0
 	method laPego() = albumes.all {album => album.buenaVenta()}
+	method aplanarCancionesDeAlbum() = albumes.map{album => album.canciones()}.flatten()
+	method cancionesContienenPalabra(palabra) = 
+		self.aplanarCancionesDeAlbum().filter {cancion => cancion.letraContiene(palabra)}.asSet()
 }
 
 class MusicoDeGrupo inherits Musico{
-	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo) =
-		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo)
-	override method interpretaBien(cancion) = cancion.duracion() > 300  //300 segundos 
+//	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo) =
+//		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo)
+	override method interpretaBien(cancion) = cancion.duracion() > 300 
 	override method ganancia(presentacion) =	
 		 if (presentacion.esUnicoEnPresentacion(self))
 		 	return 100
@@ -58,9 +61,7 @@ class VocalistaPopular inherits Musico{
 		if (presentacion.establecimiento().esConcurrido(presentacion.fecha()))
 			return 500
 		else
-			return 400 	
-//	method cancionesContienenPalabra(palabra) =
-//		albumes.canciones().filter {cancion => cancion.letraContiene(palabra)}	
+			return 400 		
 }
 
 object luisAlberto inherits Musico(8,0,false){
@@ -70,7 +71,7 @@ object luisAlberto inherits Musico(8,0,false){
 	method guitarra(_guitarra) {guitarra = _guitarra}
 	
 	override method habilidad() = 100.min(habilidadBase * guitarra.valor()) 
-
+	override method interpretaBien(cancion) = true
 	override method ganancia(presentacion) =
 		if (presentacion.fecha() < fechaLimite)
 			return 1000

@@ -166,6 +166,12 @@ describe "Test generales"{
 	test "Saber si Joaquín es minimalista"{
 		assert.notThat(joaquin.esMinimalista())
 	}
+	test "Saber qué canciones de Luis Alberto tienen la palabra 'cielo' "{
+		assert.equals(#{cancionCrisantemo, cancionAlmaDeDiamante}, luisAlberto.cancionesContienenPalabra("cielo"))
+	}
+	test "Saber qué canciones de Luis Alberto tienen la palabra 'pujante' "{
+		assert.equals(#{}, luisAlberto.cancionesContienenPalabra("pujante"))
+	}
 	test "Saber cuántos segundos dura la obra de Kike"{
 		assert.equals(0, kike.duracionDeObra())
 	}
@@ -193,7 +199,16 @@ describe "Test generales"{
 	test "Queremos saber si Joaquín la pegó"{
 		assert.that(joaquin.laPego())
 	}
+	/* TESTS QUE ME SIRVIERON PARA SACAR EL REQUERIMIENTO 2 */
+	/*
 	test "Soledad que canciones contienen soñamos"{
-		assert.equals(cancionCorazonAmericano, soledad.cancionesContienenPalabra("soñamos"))
+		assert.equals(#{cancionCorazonAmericano}, soledad.cancionesContienenPalabra("soñamos"))
 	}
+	test "album La SOle contiene soñamos"{
+		assert.equals(#{cancionCorazonAmericano}, albumLaSole.contienePalabra("soñamos"))
+	}
+	test "Soledad que albumes"{
+		assert.equals([#{cancionEres, cancionCorazonAmericano}], soledad.albumes().map{album => album.canciones()})
+	}
+	*/
 }

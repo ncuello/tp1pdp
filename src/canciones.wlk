@@ -11,7 +11,7 @@ class Cancion {
 	method duracion() = duracion
 	method letra() = letra
 	
-	method letraContiene(palabra) = self.letra().toLowerCase().contains(palabra)
+	method letraContiene(palabra) = letra.toLowerCase().contains(palabra)
 	method esCorta() = duracion < 180
 	method contenidoDeLetra() = letra.length()
 }
