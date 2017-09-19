@@ -1,5 +1,3 @@
-import albumes.*
-import canciones.*
 class Musico{ 
 	var tocaEnGrupo
 	const habilidadBase
