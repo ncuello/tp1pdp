@@ -65,7 +65,24 @@ describe "Test generales"{
 		luisAlberto.albumes().add(albumParaLosArboles)
 		luisAlberto.albumes().add(albumJustCrisantemo)
 	}
-	
+	test "la" {
+		joaquin.agregarAutor()
+		assert.equals(joaquin, albumEspecialLaFamilia.autor())
+	}
+	test "la2" {
+		joaquin.agregarAutor()
+		albumEspecialLaFamilia.agregarAutorACancion()
+		assert.equals(joaquin, cancionLaFamilia.autor())
+	}
+	test "la3" {
+		albumEspecialLaFamilia.autor(joaquin)
+		albumEspecialLaFamilia.agregarAutorACancion()
+		assert.equals(joaquin, cancionLaFamilia.autor())
+	}
+	test "la4" {
+		joaquin.agregarAutor2()
+		assert.equals(joaquin, cancionLaFamilia.autor())
+	}
 	test "Joaquín canta en el grupo Pimpinela. Queremos conocer su habilidad" {	
 		assert.equals(25,joaquin.habilidad())
 	}

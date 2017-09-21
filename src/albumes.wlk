@@ -4,6 +4,7 @@ class Album{
 	const copiasEditadas
 	const copiasVendidas
 	const canciones
+	var autor
 	constructor(_fecha, _copiasEditadas, _copiasVendidas, _canciones){
 		fecha = _fecha
 		copiasEditadas = _copiasEditadas
@@ -21,4 +22,12 @@ class Album{
 	
 	method buenaVenta() = copiasVendidas > copiasEditadas * 0.75
 	method contienePalabra(palabra) = canciones.filter {cancion => cancion.letraContiene(palabra)}
+	
+	method autor() = autor
+	method autor(_autor) { autor = _autor }
+	
+	method agregarAutorACancion() = self.canciones().forEach {cancion => cancion.autor(self.autor())}
+	
+	method agregarAutor(musico) = self.canciones().forEach {cancion => cancion.autor(musico)}
+								 
 }

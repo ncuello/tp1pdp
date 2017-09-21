@@ -2,6 +2,7 @@ class Cancion {
 	const titulo
 	const duracion
 	const letra
+	var autor
 	constructor(_titulo, _duracion, _letra){
 		titulo = _titulo
 		duracion = _duracion
@@ -14,4 +15,7 @@ class Cancion {
 	method letraContiene(palabra) = letra.toLowerCase().contains(palabra)
 	method esCorta() = duracion < 180
 	method contenidoDeLetra() = letra.length()
+	
+	method autor() = autor
+	method autor(_autor) { autor = _autor } 
 }

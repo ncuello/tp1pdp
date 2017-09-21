@@ -33,6 +33,9 @@ class Musico{
 	method aplanarCancionesDeAlbum() = albumes.map{album => album.canciones()}.flatten()
 	method cancionesContienenPalabra(palabra) = 
 		self.aplanarCancionesDeAlbum().filter {cancion => cancion.letraContiene(palabra)}.asSet()
+	
+	method agregarAutor() = albumes.forEach{album => album.autor(self)} 
+	method agregarAutor2() = albumes.forEach{album => album.agregarAutor(self)} 
 }
 
 class MusicoDeGrupo inherits Musico{
