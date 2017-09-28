@@ -18,8 +18,8 @@ class Album{
 	
 	method todasLasCancionesSonCortas() = canciones.all {cancion => cancion.esCorta()}
 	method duracion() = canciones.sum {cancion => cancion.duracion()}
-	method cancionMasLarga() = canciones.max {cancion => cancion.contenidoDeLetra()}
-	
+	method cancionMasLarga() = canciones.max {cancion => cancion.contenidoDeLetra()}.titulo()
+//	method cancionMasLarga() = self.cancionMasLarga2().titulo()
 	method buenaVenta() = copiasVendidas > copiasEditadas * 0.75
 	method contienePalabra(palabra) = canciones.filter {cancion => cancion.letraContiene(palabra)}
 	

@@ -13,14 +13,14 @@ class Musico{
 	method habilidadBase() = habilidadBase
 	method habilidadSiTocaEnGrupo() = habilidadSiTocaEnGrupo
 	method albumes() = albumes
-	
+
 	method habilidad() =
 		if (tocaEnGrupo)
 			return habilidadBase + habilidadSiTocaEnGrupo
 		else
 			return habilidadBase
 		
-	method interpretaBien(cancion)
+	method interpretaBien(cancion) = cancion.autor(self) or self.habilidad() > 60
 	method ganancia(presentacion)
 		 	
 	method esMinimalista() = albumes.all {album => album.todasLasCancionesSonCortas()}
@@ -30,7 +30,7 @@ class Musico{
 		else
 			return 0
 	method laPego() = albumes.all {album => album.buenaVenta()}
-	method aplanarCancionesDeAlbum() = albumes.map{album => album.canciones()}.flatten()
+	method aplanarCancionesDeAlbum() = albumes.flatMap{album => album.canciones()}
 	method cancionesContienenPalabra(palabra) = 
 		self.aplanarCancionesDeAlbum().filter {cancion => cancion.letraContiene(palabra)}.asSet()
 	
@@ -41,7 +41,7 @@ class Musico{
 class MusicoDeGrupo inherits Musico{
 //	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo) =
 //		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo)
-	override method interpretaBien(cancion) = cancion.duracion() > 300 
+	override method interpretaBien(cancion) = super(cancion) or cancion.duracion() > 300 
 	override method ganancia(presentacion) =	
 		 if (presentacion.esUnicoEnPresentacion(self))
 		 	return 100
@@ -57,7 +57,7 @@ class VocalistaPopular inherits Musico{
 		}
 	method palabraMagica() = palabraMagica
 		
-	override method interpretaBien(cancion) = cancion.letraContiene(palabraMagica)
+	override method interpretaBien(cancion) = super(cancion) or cancion.letraContiene(palabraMagica)
 	override method ganancia(presentacion) = 
 		if (presentacion.establecimiento().esConcurrido(presentacion.fecha()))
 			return 500

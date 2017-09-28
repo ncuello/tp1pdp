@@ -116,7 +116,7 @@ describe "Test generales"{
 		assert.equals(40, luisAlberto.habilidad())
 	}
 	test "Queremos saber si Joaquín interpreta bien la canción La Familia"{
-		assert.notThat(joaquin.interpretaBien(cancionLaFamilia))
+		assert.that(joaquin.interpretaBien(cancionLaFamilia))
 	}
 	test "Queremos saber si Joaquín interpreta bien la canción Cisne"{
 		assert.that(joaquin.interpretaBien(cancionCisne))
