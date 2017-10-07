@@ -1,4 +1,4 @@
-class Musico{ 
+class Musico{
 	var tocaEnGrupo
 	const habilidadBase
 	const habilidadSiTocaEnGrupo
@@ -13,40 +13,61 @@ class Musico{
 	method habilidadBase() = habilidadBase
 	method habilidadSiTocaEnGrupo() = habilidadSiTocaEnGrupo
 	method albumes() = albumes
-
+	
 	method habilidad() =
 		if (tocaEnGrupo)
 			return habilidadBase + habilidadSiTocaEnGrupo
 		else
 			return habilidadBase
 		
-	method interpretaBien(cancion) = cancion.autor(self) or self.habilidad() > 60
+	method interpretaBien(cancion)
 	method ganancia(presentacion)
-		 	
+			 	
 	method esMinimalista() = albumes.all {album => album.todasLasCancionesSonCortas()}
+	
 	method duracionDeObra() = 
 		if(!albumes.isEmpty())
 			albumes.sum {album => album.duracion()}
 		else
 			return 0
+			
 	method laPego() = albumes.all {album => album.buenaVenta()}
 	method aplanarCancionesDeAlbum() = albumes.flatMap{album => album.canciones()}
+	
 	method cancionesContienenPalabra(palabra) = 
 		self.aplanarCancionesDeAlbum().filter {cancion => cancion.letraContiene(palabra)}.asSet()
-	
-	method agregarAutor() = albumes.forEach{album => album.autor(self)} 
-	method agregarAutor2() = albumes.forEach{album => album.agregarAutor(self)} 
 }
 
 class MusicoDeGrupo inherits Musico{
-//	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo) =
-//		super(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo)
-	override method interpretaBien(cancion) = super(cancion) or cancion.duracion() > 300 
+	override method interpretaBien(cancion) = cancion.duracion() > 300  //300 segundos 
 	override method ganancia(presentacion) =	
 		 if (presentacion.esUnicoEnPresentacion(self))
 		 	return 100
 		 else 
 		 	return 50		
+}
+
+class MusicoDeGrupoBuilder {
+	var habilidadBase
+	var habilidadSiTocaEnGrupo
+	var tocaEnGrupo
+	
+	method habilidadBase(_habilidadBase){
+		habilidadBase = _habilidadBase
+		return self
+	}
+	method habilidadSiTocaEnGrupo(_habilidadSiTocaEnGrupo) {
+		habilidadSiTocaEnGrupo = _habilidadSiTocaEnGrupo
+		return self
+	}
+	method tocaEnGrupo(_tocaEnGrupo) {
+		tocaEnGrupo = _tocaEnGrupo
+		return self
+	}
+	method build() {
+		const musicoDeGrupo = new MusicoDeGrupo(habilidadBase, habilidadSiTocaEnGrupo, tocaEnGrupo)
+		return musicoDeGrupo
+	}
 }
 
 class VocalistaPopular inherits Musico{
@@ -57,12 +78,25 @@ class VocalistaPopular inherits Musico{
 		}
 	method palabraMagica() = palabraMagica
 		
-	override method interpretaBien(cancion) = super(cancion) or cancion.letraContiene(palabraMagica)
+	override method interpretaBien(cancion) = cancion.letraContiene(palabraMagica)
 	override method ganancia(presentacion) = 
 		if (presentacion.establecimiento().esConcurrido(presentacion.fecha()))
 			return 500
 		else
-			return 400 		
+			return 400
+}
+
+class VocalistaPopularBuilder inherits MusicoDeGrupoBuilder {
+	var palabraMagica
+	
+	method palabraMagica(_palabraMagica){
+		palabraMagica = _palabraMagica
+		return self
+	}
+	override method build() {
+		const vocalistaPopular = new VocalistaPopular(habilidadBase, habilidadSiTocaEnGrupo, tocaEnGrupo, palabraMagica)
+		return vocalistaPopular
+	}
 }
 
 object luisAlberto inherits Musico(8,0,false){
