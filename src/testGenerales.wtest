@@ -25,10 +25,10 @@ describe "Test generales"{
 	const albumJustCrisantemo
 	const presentacionLunaPark
 	const presentacionLaTrastienda
-	const criterioDuracion
-	const criterioLargoDeLetra
 	const letraRemixLaFamilia
-	const cancionRemix
+	const mashups
+	const letraAlmaCrisantemo
+	var recitalPdpalooza
 	fixture {
 		joaquin = new MusicoDeGrupoBuilder()
 			.habilidadBase(20)
@@ -55,26 +55,12 @@ describe "Test generales"{
 		fender = new Guitarra(10)
 		gibsonSana = new Guitarra(15)
 		gibsonNoSana = new Guitarra(5)
-		cancionCisne = new Cancion("Cisne", 312, "Hoy el viento se
-							abri� qued� vac�o el aire una vez m�s y el manantial brot� y nadie est�
-							aqu� y puedo ver que solo estallan las hojas al brillar")
+		cancionCisne = new Cancion("Cisne", 312, "Hoy el viento se abrió quedó vacío el aire una vez más y el manantial brotó y nadie está aquí y puedo ver que solo estallan las hojas al brillar")
 		cancionLaFamilia = new Cancion("La familia", 264, "Quiero brindar por mi gente sencilla, por el amor brindo por la familia")
-		cancionEres = new Cancion("Eres", 145, "Eres lo mejor que me
-							pas� en la vida, no tengo duda, no habr� m�s nada despu�s de ti. Eres
-							lo que le dio brillo al d�a a d�a, y as� ser� por siempre, no cambiar�,
-							hasta el final de mis d�as.")
-		cancionCorazonAmericano = new Cancion("Coraz�n americano", 154, "Canta
-										coraz�n, canta m�s alto, que tu pena al fin se va marchando, el nuevo
-										milenio ha de encontrarnos, junto coraz�n, como so�amos.")
-		cancionAlmaDeDiamante = new Cancion("Alma de diamante", 216, "Ven a m�
-										con tu dulce luz alma de diamante. Y aunque el sol se nuble
-										despu�s sos alma de diamante. Cielo o piel silencio o verdad sos
-										alma de diamante. Por eso ven as� con la humanidad alma de
-										diamante")
-		cancionCrisantemo = new Cancion("Crisantemo", 175, "T�came junto a
-									esta pared, yo quede por aqu�... cuando no hubo m�s luz...
-									quiero mirar a trav�s de mi piel... Crisantemo, que se abri�...
-									encuentra el camino hacia el cielo")
+		cancionEres = new Cancion("Eres", 145, "Eres lo mejor que me pasó en la vida, no tengo duda, no habrá más nada después de ti. Eres lo que le dio brillo al día a día, y así será por siempre, no cambiará, hasta el final de mis días.")
+		cancionCorazonAmericano = new Cancion("Corazón americano", 154, "Canta corazón, canta más alto, que tu pena al fin se va marchando, el nuevo milenio ha de encontrarnos, junto corazón, como soñamos.")
+		cancionAlmaDeDiamante = new Cancion("Alma de diamante", 216, "Ven a mí con tu dulce luz alma de diamante. Y aunque el sol se nuble después sos alma de diamante. Cielo o piel silencio o verdad sos alma de diamante. Por eso ven así con la humanidad alma de diamante")
+		cancionCrisantemo = new Cancion("Crisantemo", 175, "Tócame junto a esta pared, yo quede por aquí... cuando no hubo más luz... quiero mirar a través de mi piel... Crisantemo, que se abrió... encuentra el camino hacia el cielo")
 		albumEspecialLaFamilia = new AlbumBuilder()
 			.fecha(17, 6, 1992)
 			.copiasVendidas(89000)
@@ -101,20 +87,43 @@ describe "Test generales"{
 			.copiasEditadas(28000)
 			.agregarCancion(cancionCrisantemo)
 			.build()	
-		presentacionLunaPark = new Presentacion(new Date(20,4,2017), lunaPark, #{luisAlberto, joaquin, lucia})
-		presentacionLaTrastienda = new Presentacion(new Date(15,11,2017), laTrastienda, #{luisAlberto, joaquin, lucia})
+		presentacionLunaPark = new Presentacion(new Date(20,4,2017), lunaPark)
+		presentacionLunaPark.agregarCantante(luisAlberto)
+		presentacionLunaPark.agregarCantante(joaquin)
+		presentacionLunaPark.agregarCantante(lucia)
+		presentacionLaTrastienda = new Presentacion(new Date(15,11,2017), laTrastienda)
+		presentacionLaTrastienda.agregarCantante(luisAlberto)
+		presentacionLaTrastienda.agregarCantante(joaquin)
+		presentacionLaTrastienda.agregarCantante(lucia)
 		joaquin.albumes().add(albumEspecialLaFamilia)
 		soledad.albumes().add(albumLaSole)
 		luisAlberto.albumes().add(albumParaLosArboles)
 		luisAlberto.albumes().add(albumJustCrisantemo)
 		
 		/* FIXTURE TERCERA PARTE */
-		criterioDuracion = new Duracion()
-		criterioLargoDeLetra = new LargoDeLetra()
 		letraRemixLaFamilia = "mueve tu cuelpo baby Quiero brindar por mi gente sencilla, por el amor brindo por la familia yeah oh yeah"
-		cancionRemix = new CancionRemix()
-	}
+		mashups = new CancionMashups()
+		letraAlmaCrisantemo = "Ven a mí con tu dulce luz alma de diamante. Y aunque el sol se nuble después sos alma de diamante. Cielo o piel silencio o verdad sos alma de diamante. Por eso ven así con la humanidad alma de diamante Tócame junto a esta pared, yo quede por aquí... cuando no hubo más luz... quiero mirar a través de mi piel... Crisantemo, que se abrió... encuentra el camino hacia el cielo"
+		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
+	}		
 	/* A PARTIR DE AC� ES LA TERCERA PARTE */
+	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
+		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
+		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
+	}
+	
+	test "Mashup formado por alma de diamante y crisantemo" {
+		mashups.agregarCancion(cancionAlmaDeDiamante)
+		mashups.agregarCancion(cancionCrisantemo)
+		mashups.crearCancionMashup()
+		assert.equals(216, mashups.duracion())
+	}
+	test "Mashup formado por alma de diamante y crisantemo letra" {
+		mashups.agregarCancion(cancionAlmaDeDiamante)
+		mashups.agregarCancion(cancionCrisantemo)
+		mashups.crearCancionMashup()
+		assert.equals(letraAlmaCrisantemo, mashups.letra())
+	}
 	test "Saber cu�l es la canci�n m�s larga del �lbum 'Especial La Familia', teniendo en cuenta la duraci�n" {
 		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLargaPorCriterio(criterioDuracion))
 	}
@@ -126,18 +135,14 @@ describe "Test generales"{
 		assert.equals(cancionEres, albumLaSole.cancionMasLargaPorCriterio(criterioLargoDeLetra))
 	}
 	
-	test "Saber cu�nto dura el remix de �La Familia�" {
-//		cancionLaFamilia.transformarARemix()
-//		assert.equals(792, cancionLaFamilia.duracion())
-		cancionLaFamilia.transformarARemix(cancionRemix)
-		assert.equals(792, cancionRemix.duracion())
+	test "Saber cu�nto dura el remix de �La Familia�2" {
+		const cancionRemixLaFamilia = cancionLaFamilia.transformarARemix()
+		assert.equals(792, cancionRemixLaFamilia.duracion())
 	}
 	
-	test "Saber cu�l es la letra del remix de �La Familia�" {
-//		cancionLaFamilia.transformarARemix()
-//		assert.equals(letraRemixLaFamilia, cancionLaFamilia.letra())
-		cancionLaFamilia.transformarARemix(cancionRemix)
-		assert.equals(letraRemixLaFamilia, cancionRemix.letra())
+	test "Saber cu�l es la letra del remix de �La Familia�2" {
+		const cancionRemixLaFamilia = cancionLaFamilia.transformarARemix()
+		assert.equals(letraRemixLaFamilia, cancionRemixLaFamilia.letra())
 	}
 	/* A PARTIR DE AC� ES LA PRIMERA PARTE */
 	test "Joaqu�n canta en el grupo Pimpinela. Queremos conocer su habilidad" {	
@@ -173,10 +178,18 @@ describe "Test generales"{
 		assert.equals(40, luisAlberto.habilidad())
 	}
 	test "Queremos saber si Joaqu�n interpreta bien la canci�n La Familia"{
-		assert.notThat(joaquin.interpretaBien(cancionLaFamilia))
+		assert.that(joaquin.interpretaBien(cancionLaFamilia))
 	}
 	test "Queremos saber si Joaqu�n interpreta bien la canci�n Cisne"{
 		assert.that(joaquin.interpretaBien(cancionCisne))
+	}
+	test "Queremos saber si Luc�a interpreta bien la canci�n La Familia como solista"{
+		lucia.tocaEnGrupo(false)
+		assert.that(lucia.interpretaBien(cancionLaFamilia))
+	}
+	test "Queremos saber si Luc�a interpreta bien la canci�n Cisne como solista"{
+		lucia.tocaEnGrupo(false)
+		assert.that(lucia.interpretaBien(cancionCisne))
 	}
 	test "Queremos saber si Luc�a interpreta bien la canci�n La Familia"{
 		assert.that(lucia.interpretaBien(cancionLaFamilia))
@@ -195,7 +208,8 @@ describe "Test generales"{
 	}
 	test "Modificar la presentaci�n de la Trastienda para que solo act�e Joaqu�n.
 	Queremos saber cu�nto cobra Joaqu�n por la presentaci�n de la Trastienda del 15/11/2017"{
-		presentacionLaTrastienda.cantantes(#{joaquin})
+		presentacionLaTrastienda.eliminarCantante(lucia)
+		presentacionLaTrastienda.eliminarCantante(luisAlberto)
 		assert.equals(100,joaquin.ganancia(presentacionLaTrastienda))
 	}
 	test "Queremos saber la capacidad de La Trastienda para el 05 de agosto del 2017"{

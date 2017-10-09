@@ -2,8 +2,8 @@ class Cancion {
 	var titulo
 	var duracion
 	var letra
-	var criterioParaComparar = new LargoDeLetra()
-	var cancionRemix = new CancionRemix()
+	var criterioParaComparar
+	constructor()
 	constructor(_titulo, _duracion, _letra){
 		titulo = _titulo
 		duracion = _duracion
@@ -25,43 +25,59 @@ class Cancion {
 		return criterioParaComparar.comparaPor(self)
 	}
 	
-	method modificarCancion(_cancion){
-		cancionRemix = _cancion
+	method transformarARemix() {
+		var tituloRemix
+		var duracionRemix
+		var letraRemix
+		tituloRemix = self.titulo() + " remix"
+		duracionRemix = self.duracion() * 3
+		letraRemix = "mueve tu cuelpo baby " + self.letra() + " yeah oh yeah"
+		return new Cancion(tituloRemix, duracionRemix, letraRemix)
 	}
-	
-	method transformarARemix(_cancion){
-		self.modificarCancion(_cancion)
-		cancionRemix.titulo(self.titulo() + " remix")
-		cancionRemix.duracion(self.duracion() * 3)
-		cancionRemix.letra("mueve tu cuelpo baby " + self.letra() + " yeah oh yeah")
-//		titulo = self.titulo() + " remix"
-//		duracion = self.duracion() * 3
-//		letra = "mueve tu cuelpo baby " + self.letra() + " yeah oh yeah"
-		return cancionRemix
-	} 
 }
-class CancionRemix {
-	var titulo
-	var duracion
-	var letra
-	constructor()
-	constructor(_titulo, _duracion, _letra){
-		titulo = _titulo
-		duracion = _duracion
-		letra = _letra
+
+class CancionMashups inherits Cancion{
+	const canciones = []
+	method agregarCancion(_cancion) = canciones.add(_cancion)
+	
+	method armarTitulo() = canciones.fold("", {titulo, cancion => titulo + cancion.titulo() + " "}).trim()
+	method establecerDuracion() = canciones.max{cancion => cancion.duracion()}.duracion()
+	method armarLetra() = canciones.fold("", {letra, cancion => letra + cancion.letra() + " "}).trim() 	
+	method crearCancionMashup() {
+		titulo = self.armarTitulo()
+		duracion = self.establecerDuracion()
+		letra = self.armarLetra()
 	}
-	
-	method titulo() = titulo
-	method duracion() = duracion
-	method letra() = letra
-	method titulo(_titulo){titulo = _titulo}
-	method duracion(_duracion){duracion = _duracion}
-	method letra(_letra){letra = _letra}
 }
-class LargoDeLetra {
+
+object criterioLargoDeLetra {
 	method comparaPor(_cancion) = _cancion.largoDeLetra()
 }
 
-class Duracion {
+object criterioDuracion {
 	method comparaPor(_cancion) = _cancion.duracion()
+}
+
+class CancionesBuilder {
+	var titulo
+	var duracion
+	var letra
+	
+	method titulo(_titulo){
+		titulo = _titulo
+		return self
+	}
+	method duracion(_duracion){
+		duracion = _duracion
+		return self
+	}
+	method letra(_letra){
+		letra = _letra
+		return self
+	}
+	
+	method build(){
+		const cancion = new Cancion(titulo, duracion, letra)
+		return cancion
+	}
 }

@@ -21,7 +21,7 @@ class Album{
 	method buenaVenta() = copiasVendidas > copiasEditadas * 0.75
 	
 	method cancionMasLargaPorCriterio(_criterio) = canciones.max {cancion => cancion.comparaPor(_criterio)}
-
+	
 }
 
 class AlbumBuilder {
