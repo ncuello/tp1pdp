@@ -1,3 +1,10 @@
+import establecimientos.*
+import canciones.*
+import exceptions.*
+import musicos.*
+import albumes.*
+import guitarras.*
+
 class Musico{
 	var tocaEnGrupo
 	const habilidadBase
@@ -42,6 +49,23 @@ class Musico{
 	method interpretaBienCancionDeSuAutoria(_cancion) = self.aplanarCancionesDeAlbum().contains(_cancion)
 	
 	method compusoAlMenosUnaCancion() = !albumes.isEmpty()
+	
+	method tieneLaCantidadDeCancionesParaTocarEnELPdpalooza(){
+		if(!self.compusoAlMenosUnaCancion()){
+			throw new NoTieneAlMenosUnaCancion("el musico no compuso ninguna cancion")
+		}else{
+			return true
+		}
+	}
+	
+	method tieneLaHabilidadSuficiente() = self.habilidad() > 69
+	method tieneLaHabilidadParaTocarEnELPdpalooza(){
+		if(!self.tieneLaHabilidadSuficiente()){
+			throw new NoTiene70DeHabilidad("el musico no tiene 70 de habilidad")
+		}else{
+			return true
+		}
+	}
 }
 
 class MusicoDeGrupo inherits Musico{

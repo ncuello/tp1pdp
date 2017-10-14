@@ -107,6 +107,11 @@ describe "Test generales"{
 		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
 	}		
 	/* A PARTIR DE AC� ES LA TERCERA PARTE */
+	test "Luis Alberto puede tocar en el Pdpalooza"{
+		pdpalooza.agregarMusico(luisAlberto)
+		assert.equals(#{luisAlberto}, pdpalooza.cantantes())
+	}
+	
 	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
 		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
 		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
