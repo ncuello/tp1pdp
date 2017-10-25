@@ -26,7 +26,6 @@ describe "Test generales"{
 	const presentacionLunaPark
 	const presentacionLaTrastienda
 	const letraRemixLaFamilia
-	const mashups
 	const letraAlmaCrisantemo
 	var recitalPdpalooza
 	fixture {
@@ -102,7 +101,7 @@ describe "Test generales"{
 		
 		/* FIXTURE TERCERA PARTE */
 		letraRemixLaFamilia = "mueve tu cuelpo baby Quiero brindar por mi gente sencilla, por el amor brindo por la familia yeah oh yeah"
-		mashups = new CancionMashups()
+
 		letraAlmaCrisantemo = "Ven a mí con tu dulce luz alma de diamante. Y aunque el sol se nuble después sos alma de diamante. Cielo o piel silencio o verdad sos alma de diamante. Por eso ven así con la humanidad alma de diamante Tócame junto a esta pared, yo quede por aquí... cuando no hubo más luz... quiero mirar a través de mi piel... Crisantemo, que se abrió... encuentra el camino hacia el cielo"
 		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
 	}		
@@ -118,17 +117,15 @@ describe "Test generales"{
 	}
 	
 	test "Mashup formado por alma de diamante y crisantemo" {
-		mashups.agregarCancion(cancionAlmaDeDiamante)
-		mashups.agregarCancion(cancionCrisantemo)
-		mashups.crearCancionMashup()
-		assert.equals(216, mashups.duracion())
+		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
+		assert.equals(letraAlmaCrisantemo, mashup.letra())
 	}
-	test "Mashup formado por alma de diamante y crisantemo letra" {
-		mashups.agregarCancion(cancionAlmaDeDiamante)
-		mashups.agregarCancion(cancionCrisantemo)
-		mashups.crearCancionMashup()
-		assert.equals(letraAlmaCrisantemo, mashups.letra())
-	}
+//	test "Mashup formado por alma de diamante y crisantemo letra" {
+//		mashups.agregarCancion(cancionAlmaDeDiamante)
+//		mashups.agregarCancion(cancionCrisantemo)
+//		mashups.crearCancionMashup()
+//		assert.equals(letraAlmaCrisantemo, mashups.letra())
+//	}
 	test "Saber cu�l es la canci�n m�s larga del �lbum 'Especial La Familia', teniendo en cuenta la duraci�n" {
 		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLargaPorCriterio(criterioDuracion))
 	}
@@ -141,12 +138,12 @@ describe "Test generales"{
 	}
 	
 	test "Saber cu�nto dura el remix de �La Familia�2" {
-		const cancionRemixLaFamilia = cancionLaFamilia.transformarARemix()
+		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
 		assert.equals(792, cancionRemixLaFamilia.duracion())
 	}
 	
 	test "Saber cu�l es la letra del remix de �La Familia�2" {
-		const cancionRemixLaFamilia = cancionLaFamilia.transformarARemix()
+		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
 		assert.equals(letraRemixLaFamilia, cancionRemixLaFamilia.letra())
 	}
 	/* A PARTIR DE AC� ES LA PRIMERA PARTE */

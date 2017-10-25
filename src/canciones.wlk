@@ -1,9 +1,9 @@
 class Cancion {
-	var titulo
-	var duracion
-	var letra
+	const titulo
+	const duracion
+	const letra
 	var criterioParaComparar
-	constructor()
+
 	constructor(_titulo, _duracion, _letra){
 		titulo = _titulo
 		duracion = _duracion
@@ -25,29 +25,33 @@ class Cancion {
 		return criterioParaComparar.comparaPor(self)
 	}
 	
-	method transformarARemix() {
-		var tituloRemix
-		var duracionRemix
-		var letraRemix
-		tituloRemix = self.titulo() + " remix"
-		duracionRemix = self.duracion() * 3
-		letraRemix = "mueve tu cuelpo baby " + self.letra() + " yeah oh yeah"
-		return new Cancion(tituloRemix, duracionRemix, letraRemix)
+
+}
+
+class Remix inherits Cancion{
+	constructor(cancionOriginal){
+		titulo = self.componerTituloRemix(cancionOriginal)
+		duracion = self.componerDuracionRemix(cancionOriginal)
+		letra = self.componerLetraRemix(cancionOriginal)
 	}
+	method componerTituloRemix(cancionOriginal) = cancionOriginal.titulo() + " remix"
+	
+	method componerDuracionRemix(cancionOriginal) = cancionOriginal.duracion() * 3
+	
+	method componerLetraRemix(cancionOriginal) = "mueve tu cuelpo baby " + cancionOriginal.letra() + " yeah oh yeah"
 }
 
 class CancionMashups inherits Cancion{
-	const canciones = []
-	method agregarCancion(_cancion) = canciones.add(_cancion)
-	
-	method armarTitulo() = canciones.fold("", {titulo, cancion => titulo + cancion.titulo() + " "}).trim()
-	method establecerDuracion() = canciones.max{cancion => cancion.duracion()}.duracion()
-	method armarLetra() = canciones.fold("", {letra, cancion => letra + cancion.letra() + " "}).trim() 	
-	method crearCancionMashup() {
-		titulo = self.armarTitulo()
-		duracion = self.establecerDuracion()
-		letra = self.armarLetra()
+	constructor(listaDeCanciones) {
+		titulo = self.armarTitulo(listaDeCanciones)
+		duracion = self.establecerDuracion(listaDeCanciones)
+		letra = self.armarLetra(listaDeCanciones)
 	}
+	
+	method armarTitulo(canciones) = canciones.fold("", {titulo, cancion => titulo + cancion.titulo() + " "}).trim()
+	method establecerDuracion(canciones) = canciones.max{cancion => cancion.duracion()}.duracion()
+	method armarLetra(canciones) = canciones.fold("", {letra, cancion => letra + cancion.letra() + " "}).trim() 	
+	
 }
 
 object criterioLargoDeLetra {
