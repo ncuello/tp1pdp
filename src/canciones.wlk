@@ -1,8 +1,9 @@
+import builders.*
+
 class Cancion {
 	const titulo
 	const duracion
 	const letra
-	var criterioParaComparar
 
 	constructor(_titulo, _duracion, _letra){
 		titulo = _titulo
@@ -16,15 +17,6 @@ class Cancion {
 	method letraContiene(palabra) = self.letra().toLowerCase().contains(palabra)
 	method esCorta() = duracion < 180
 	method largoDeLetra() = letra.length()
-	
-	method criterioParaComparar(_criterio) {
-		criterioParaComparar = _criterio
-	}
-	method comparaPor(_criterio) {
-		self.criterioParaComparar(_criterio)
-		return criterioParaComparar.comparaPor(self)
-	}
-	
 
 }
 
@@ -62,26 +54,3 @@ object criterioDuracion {
 	method comparaPor(_cancion) = _cancion.duracion()
 }
 
-class CancionesBuilder {
-	var titulo
-	var duracion
-	var letra
-	
-	method titulo(_titulo){
-		titulo = _titulo
-		return self
-	}
-	method duracion(_duracion){
-		duracion = _duracion
-		return self
-	}
-	method letra(_letra){
-		letra = _letra
-		return self
-	}
-	
-	method build(){
-		const cancion = new Cancion(titulo, duracion, letra)
-		return cancion
-	}
-}

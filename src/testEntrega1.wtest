@@ -7,7 +7,7 @@ import albumes.*
 import builders.*
 import exceptions.*
 
-describe "Test generales"{
+describe "Test entrega 1"{
 	const joaquin
 	const lucia
 	const soledad
@@ -106,43 +106,8 @@ describe "Test generales"{
 
 		letraAlmaCrisantemo = "Ven a mí con tu dulce luz alma de diamante. Y aunque el sol se nuble después sos alma de diamante. Cielo o piel silencio o verdad sos alma de diamante. Por eso ven así con la humanidad alma de diamante Tócame junto a esta pared, yo quede por aquí... cuando no hubo más luz... quiero mirar a través de mi piel... Crisantemo, que se abrió... encuentra el camino hacia el cielo"
 		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
-	}		
-	/* A PARTIR DE AC� ES LA TERCERA PARTE */
-	test "Luis Alberto puede tocar en el Pdpalooza"{
-		pdpalooza.agregarMusico(luisAlberto)
-		assert.equals(#{luisAlberto}, pdpalooza.cantantes())
 	}
 	
-	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
-		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
-		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
-	}
-	
-	test "Mashup formado por alma de diamante y crisantemo" {
-		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
-		assert.equals(letraAlmaCrisantemo, mashup.letra())
-	}
-
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'Especial La Familia', teniendo en cuenta la duraci�n" {
-		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLargaPorCriterio(criterioDuracion))
-	}
-	
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'La Sole', teniendo en cuenta la duraci�n" {
-		assert.equals(cancionCorazonAmericano, albumLaSole.cancionMasLargaPorCriterio(criterioDuracion))
-	}
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'La Sole', teniendo en cuenta la longitud de letra" {
-		assert.equals(cancionEres, albumLaSole.cancionMasLargaPorCriterio(criterioLargoDeLetra))
-	}
-	
-	test "Saber cu�nto dura el remix de �La Familia�2" {
-		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
-		assert.equals(792, cancionRemixLaFamilia.duracion())
-	}
-	
-	test "Saber cu�l es la letra del remix de �La Familia�2" {
-		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
-		assert.equals(letraRemixLaFamilia, cancionRemixLaFamilia.letra())
-	}
 	/* A PARTIR DE AC� ES LA PRIMERA PARTE */
 	test "Joaqu�n canta en el grupo Pimpinela. Queremos conocer su habilidad" {	
 		assert.equals(25,joaquin.habilidad())
@@ -237,53 +202,5 @@ describe "Test generales"{
 	test "Queremos saber el costo de la presentaci�n de la Trastienda el 15/11/2017"{
 		assert.equals(1650, presentacionLaTrastienda.costoTotal())
 	}
-	/* A PARTIR DE AC� ES LA SEGUNDA PARTE */
-	test "Saber si la canci�n �Crisantemo� es corta"{
-		assert.that(cancionCrisantemo.esCorta())
-	}
-	test "Saber si la canci�n �Alma de diamante� es corta"{
-		assert.notThat(cancionAlmaDeDiamante.esCorta())
-	}
-	test "Saber si Soledad es minimalista"{
-		assert.that(soledad.esMinimalista())
-	}
-	test "Saber si Luis Alberto es minimalista"{
-		assert.notThat(luisAlberto.esMinimalista())
-	}
-	test "Saber si Joaqu�n es minimalista"{
-		assert.notThat(joaquin.esMinimalista())
-	}
-	test "Saber qu� canciones de Luis Alberto tienen la palabra 'cielo' "{
-		assert.equals(#{cancionCrisantemo, cancionAlmaDeDiamante}, luisAlberto.cancionesContienenPalabra("cielo"))
-	}
-	test "Saber qu� canciones de Luis Alberto tienen la palabra 'pujante' "{
-		assert.equals(#{}, luisAlberto.cancionesContienenPalabra("pujante"))
-	}
-	test "Saber cu�ntos segundos dura la obra de Kike"{
-		assert.equals(0, kike.duracionDeObra())
-	}
-	test "Saber cu�ntos segundos dura la obra de Soledad"{
-		assert.equals(299, soledad.duracionDeObra())
-	}
-	test "Saber cu�ntos segundos dura la obra de Luis Alberto"{
-		assert.equals(703, luisAlberto.duracionDeObra())
-	}
-	test "Saber qu� canci�n es m�s larga del �lbum �Para los �rboles"{
-		assert.equals(cancionAlmaDeDiamante, albumParaLosArboles.cancionMasLarga())
-	}
-	test "Saber qu� canci�n es m�s larga del �lbum �La Sole"{
-		assert.equals(cancionEres, albumLaSole.cancionMasLarga())
-	}
-	test "Saber qu� canci�n es m�s larga del �lbum �Especial La Familia"{
-		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLarga())
-	}
-	test "Queremos saber si Luis Alberto la peg�"{
-		assert.that(luisAlberto.laPego())
-	}
-	test "Queremos saber si Soledad la peg�"{
-		assert.notThat(soledad.laPego())
-	}
-	test "Queremos saber si Joaqu�n la peg�"{
-		assert.that(joaquin.laPego())
-	}
 }
+	

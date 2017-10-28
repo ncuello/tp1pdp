@@ -1,3 +1,6 @@
+import canciones.*
+import builders.*
+
 class Album{
 	const fecha
 	const copiasEditadas
@@ -20,34 +23,6 @@ class Album{
 	
 	method buenaVenta() = copiasVendidas > copiasEditadas * 0.75
 	
-	method cancionMasLargaPorCriterio(_criterio) = canciones.max {cancion => cancion.comparaPor(_criterio)}
-	
+	method cancionMasLargaPorCriterio(_criterio) = canciones.max {cancion => _criterio.comparaPor(cancion)}	
 }
 
-class AlbumBuilder {
-	var fecha
-	var copiasEditadas
-	var copiasVendidas
-	var canciones = #{}
-	
-	method fecha(dia, mes, anio){
-		fecha = new Date(dia, mes, anio)
-		return self
-	}
-	method copiasEditadas(_copiasEditadas){
-		copiasEditadas = _copiasEditadas
-		return self
-	}
-	method copiasVendidas(_copiasVendidas){
-		copiasVendidas = _copiasVendidas
-		return self
-	}
-	method agregarCancion(_cancion){
-		canciones.add(_cancion)
-		return self
-	}
-	method build(){
-		const album = new Album(fecha, copiasEditadas, copiasVendidas, canciones)
-		return album
-	}
-}

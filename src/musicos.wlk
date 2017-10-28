@@ -4,6 +4,7 @@ import exceptions.*
 import musicos.*
 import albumes.*
 import guitarras.*
+import builders.*
 
 class Musico{
 	var tocaEnGrupo
@@ -77,29 +78,6 @@ class MusicoDeGrupo inherits Musico{
 		 	return 50		
 }
 
-class MusicoDeGrupoBuilder {
-	var habilidadBase
-	var habilidadSiTocaEnGrupo
-	var tocaEnGrupo
-	
-	method habilidadBase(_habilidadBase){
-		habilidadBase = _habilidadBase
-		return self
-	}
-	method habilidadSiTocaEnGrupo(_habilidadSiTocaEnGrupo) {
-		habilidadSiTocaEnGrupo = _habilidadSiTocaEnGrupo
-		return self
-	}
-	method tocaEnGrupo(_tocaEnGrupo) {
-		tocaEnGrupo = _tocaEnGrupo
-		return self
-	}
-	method build() {
-		const musicoDeGrupo = new MusicoDeGrupo(habilidadBase, habilidadSiTocaEnGrupo, tocaEnGrupo)
-		return musicoDeGrupo
-	}
-}
-
 class VocalistaPopular inherits Musico{
 	const palabraMagica
 	constructor(_habilidadBase, _habilidadSiTocaEnGrupo, _tocaEnGrupo, _palabraMagica) =
@@ -114,19 +92,6 @@ class VocalistaPopular inherits Musico{
 			return 500
 		else
 			return 400
-}
-
-class VocalistaPopularBuilder inherits MusicoDeGrupoBuilder {
-	var palabraMagica
-	
-	method palabraMagica(_palabraMagica){
-		palabraMagica = _palabraMagica
-		return self
-	}
-	override method build() {
-		const vocalistaPopular = new VocalistaPopular(habilidadBase, habilidadSiTocaEnGrupo, tocaEnGrupo, palabraMagica)
-		return vocalistaPopular
-	}
 }
 
 object luisAlberto inherits Musico(8,0,false){

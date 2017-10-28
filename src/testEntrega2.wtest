@@ -7,7 +7,7 @@ import albumes.*
 import builders.*
 import exceptions.*
 
-describe "Test generales"{
+describe "Test entrega 2"{
 	const joaquin
 	const lucia
 	const soledad
@@ -106,137 +106,8 @@ describe "Test generales"{
 
 		letraAlmaCrisantemo = "Ven a mí con tu dulce luz alma de diamante. Y aunque el sol se nuble después sos alma de diamante. Cielo o piel silencio o verdad sos alma de diamante. Por eso ven así con la humanidad alma de diamante Tócame junto a esta pared, yo quede por aquí... cuando no hubo más luz... quiero mirar a través de mi piel... Crisantemo, que se abrió... encuentra el camino hacia el cielo"
 		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
-	}		
-	/* A PARTIR DE AC� ES LA TERCERA PARTE */
-	test "Luis Alberto puede tocar en el Pdpalooza"{
-		pdpalooza.agregarMusico(luisAlberto)
-		assert.equals(#{luisAlberto}, pdpalooza.cantantes())
 	}
 	
-	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
-		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
-		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
-	}
-	
-	test "Mashup formado por alma de diamante y crisantemo" {
-		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
-		assert.equals(letraAlmaCrisantemo, mashup.letra())
-	}
-
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'Especial La Familia', teniendo en cuenta la duraci�n" {
-		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLargaPorCriterio(criterioDuracion))
-	}
-	
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'La Sole', teniendo en cuenta la duraci�n" {
-		assert.equals(cancionCorazonAmericano, albumLaSole.cancionMasLargaPorCriterio(criterioDuracion))
-	}
-	test "Saber cu�l es la canci�n m�s larga del �lbum 'La Sole', teniendo en cuenta la longitud de letra" {
-		assert.equals(cancionEres, albumLaSole.cancionMasLargaPorCriterio(criterioLargoDeLetra))
-	}
-	
-	test "Saber cu�nto dura el remix de �La Familia�2" {
-		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
-		assert.equals(792, cancionRemixLaFamilia.duracion())
-	}
-	
-	test "Saber cu�l es la letra del remix de �La Familia�2" {
-		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
-		assert.equals(letraRemixLaFamilia, cancionRemixLaFamilia.letra())
-	}
-	/* A PARTIR DE AC� ES LA PRIMERA PARTE */
-	test "Joaqu�n canta en el grupo Pimpinela. Queremos conocer su habilidad" {	
-		assert.equals(25,joaquin.habilidad())
-	}
-	test "Joaqu�n canta en el grupo Pimpinela, y decide lanzar su carrera solista (deja el grupo). Queremos conocer
-	su habilidad."{
-		joaquin.tocaEnGrupo(false)
-		assert.equals(20, joaquin.habilidad())
-	}
-	test "Luc�a canta en el grupo Pimpinela. Queremos saber
-	su habilidad."{
-		assert.equals(50,lucia.habilidad())
-	}
-	test "Luc�a canta en el grupo Pimpinela, y lanza su carrera solista (deja el grupo). Queremos conocer su
-	habilidad."{
-		lucia.tocaEnGrupo(false)
-		assert.equals(70, lucia.habilidad())
-	}
-	test "Luis Alberto toca con la Fender. Queremos saber su
-	habilidad."{
-		luisAlberto.guitarra(fender)
-		assert.equals(80, luisAlberto.habilidad())
-	}
-	test "Luis Alberto toca ahora con la Gibson sana.
-	Queremos saber su habilidad."{
-		luisAlberto.guitarra(gibsonSana)
-		assert.equals(100, luisAlberto.habilidad())
-	}
-	test "Alguien trata mal a la Gibson y ahora no est� sana. Luis Alberto toca con la Gibson. Queremos saber su
-	habilidad."{
-		luisAlberto.guitarra(gibsonNoSana)
-		assert.equals(40, luisAlberto.habilidad())
-	}
-	test "Queremos saber si Joaqu�n interpreta bien la canci�n La Familia"{
-		assert.that(joaquin.interpretaBien(cancionLaFamilia))
-	}
-	test "Queremos saber si Joaqu�n interpreta bien la canci�n Cisne"{
-		assert.that(joaquin.interpretaBien(cancionCisne))
-	}
-	test "Queremos saber si Luc�a interpreta bien la canci�n La Familia como solista"{
-		lucia.tocaEnGrupo(false)
-		assert.that(lucia.interpretaBien(cancionLaFamilia))
-	}
-	test "Queremos saber si Luc�a interpreta bien la canci�n Cisne como solista"{
-		lucia.tocaEnGrupo(false)
-		assert.that(lucia.interpretaBien(cancionCisne))
-	}
-	test "Queremos saber si Luc�a interpreta bien la canci�n La Familia"{
-		assert.that(lucia.interpretaBien(cancionLaFamilia))
-	}
-	test "Queremos saber si Luc�a interpreta bien la canci�n Cisne"{
-		assert.notThat(lucia.interpretaBien(cancionCisne))
-	}
-	test "Queremos saber si Luis Alberto interpreta bien la canci�n La Familia"{
-		assert.that(luisAlberto.interpretaBien(cancionLaFamilia))
-	}
-	test "Queremos saber si Luis Alberto interpreta bien la canci�n Cisne"{
-		assert.that(luisAlberto.interpretaBien(cancionCisne))
-	}
-	test "Queremos saber cu�nto cobra Joaqu�n por la presentaci�n del Luna Park"{
-		assert.equals(50,joaquin.ganancia(presentacionLunaPark))
-	}
-	test "Modificar la presentaci�n de la Trastienda para que solo act�e Joaqu�n.
-	Queremos saber cu�nto cobra Joaqu�n por la presentaci�n de la Trastienda del 15/11/2017"{
-		presentacionLaTrastienda.eliminarCantante(lucia)
-		presentacionLaTrastienda.eliminarCantante(luisAlberto)
-		assert.equals(100,joaquin.ganancia(presentacionLaTrastienda))
-	}
-	test "Queremos saber la capacidad de La Trastienda para el 05 de agosto del 2017"{
-		const dia = new Date(5,8,2017)
-		assert.equals(700, laTrastienda.capacidadTotal(dia))
-	}
-	test "Saber la capacidad de La Trastienda para el 08 de agosto del 2017" {
-		const dia = new Date(8,8,2017)
-		assert.equals(400, laTrastienda.capacidadTotal(dia))
-	}
-	test "Queremos saber cu�nto cobra Luc�a por la presentaci�n del Luna Park"{
-		assert.equals(500, lucia.ganancia(presentacionLunaPark))
-	}
-	test "Queremos saber cu�nto cobra Luc�a por la presentaci�n de La Trastienda"{
-		assert.equals(400, lucia.ganancia(presentacionLaTrastienda))
-	}
-	test "Queremos saber cu�nto cobra Luis Alberto por la presentaci�n del Luna Park"{
-		assert.equals(1000, luisAlberto.ganancia(presentacionLunaPark))
-	}
-	test "Queremos saber cu�nto cobra Luis Alberto por la presentaci�n de La Trastienda"{
-		assert.equals(1200, luisAlberto.ganancia(presentacionLaTrastienda))
-	}
-	test "Queremos saber el costo de la presentaci�n del Luna Park"{
-		assert.equals(1550, presentacionLunaPark.costoTotal())
-	}
-	test "Queremos saber el costo de la presentaci�n de la Trastienda el 15/11/2017"{
-		assert.equals(1650, presentacionLaTrastienda.costoTotal())
-	}
 	/* A PARTIR DE AC� ES LA SEGUNDA PARTE */
 	test "Saber si la canci�n �Crisantemo� es corta"{
 		assert.that(cancionCrisantemo.esCorta())
@@ -287,3 +158,4 @@ describe "Test generales"{
 		assert.that(joaquin.laPego())
 	}
 }
+	
