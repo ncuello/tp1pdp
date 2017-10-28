@@ -11,6 +11,8 @@ describe "Test generales"{
 	const joaquin
 	const lucia
 	const soledad
+	const luciaDeHabilidad90
+	const soledadDeHabilidad80
 	const kike
 	const fender
 	const gibsonSana
@@ -49,6 +51,18 @@ describe "Test generales"{
 			.build()
 		soledad = new VocalistaPopularBuilder()
 			.habilidadBase(55)
+			.habilidadSiTocaEnGrupo(0)
+			.tocaEnGrupo(false)
+			.palabraMagica("amor")
+			.build()
+		luciaDeHabilidad90 = new VocalistaPopularBuilder()
+			.habilidadBase(90)
+			.habilidadSiTocaEnGrupo(-20)
+			.tocaEnGrupo(false)
+			.palabraMagica("familia")
+			.build()
+		soledadDeHabilidad80 = new VocalistaPopularBuilder()
+			.habilidadBase(80)
 			.habilidadSiTocaEnGrupo(0)
 			.tocaEnGrupo(false)
 			.palabraMagica("amor")
@@ -98,8 +112,10 @@ describe "Test generales"{
 		presentacionLaTrastienda.agregarCantante(lucia)
 		joaquin.albumes().add(albumEspecialLaFamilia)
 		soledad.albumes().add(albumLaSole)
+		soledadDeHabilidad80.albumes().add(albumLaSole)
 		luisAlberto.albumes().add(albumParaLosArboles)
 		luisAlberto.albumes().add(albumJustCrisantemo)
+		luisAlberto.guitarra(fender)
 		
 		/* FIXTURE TERCERA PARTE */
 		letraRemixLaFamilia = "mueve tu cuelpo baby Quiero brindar por mi gente sencilla, por el amor brindo por la familia yeah oh yeah"
@@ -108,21 +124,6 @@ describe "Test generales"{
 		recitalPdpalooza = new Presentacion(new Date(15,12,2017), lunaPark)
 	}		
 	/* A PARTIR DE AC� ES LA TERCERA PARTE */
-	test "Luis Alberto puede tocar en el Pdpalooza"{
-		pdpalooza.agregarMusico(luisAlberto)
-		assert.equals(#{luisAlberto}, pdpalooza.cantantes())
-	}
-	
-	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
-		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
-		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
-	}
-	
-	test "Mashup formado por alma de diamante y crisantemo" {
-		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
-		assert.equals(letraAlmaCrisantemo, mashup.letra())
-	}
-
 	test "Saber cu�l es la canci�n m�s larga del �lbum 'Especial La Familia', teniendo en cuenta la duraci�n" {
 		assert.equals(cancionLaFamilia, albumEspecialLaFamilia.cancionMasLargaPorCriterio(criterioDuracion))
 	}
@@ -142,6 +143,35 @@ describe "Test generales"{
 	test "Saber cu�l es la letra del remix de �La Familia�2" {
 		const cancionRemixLaFamilia = new Remix(cancionLaFamilia) //.transformarARemix()
 		assert.equals(letraRemixLaFamilia, cancionRemixLaFamilia.letra())
+	}
+	
+	test "Saber cuál es la letra del mashup entre “Alma de Diamante” y “Crisantemo”" {
+		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
+		assert.equals(letraAlmaCrisantemo, mashup.letra())
+	}
+	
+	test "Saber cuál es la duración del mashup de “Alma de Diamante” y “Crisantemo”" {
+		const mashup = new CancionMashups([cancionAlmaDeDiamante, cancionCrisantemo])
+		assert.equals(216, mashup.duracion())
+	}
+	
+	test "Intentar agregar al recital Pdpalooza a Luis Alberto" {
+		recitalPdpalooza.agregarCantanteConRestriccion(luisAlberto)
+		assert.equals(#{luisAlberto}, recitalPdpalooza.cantantes())
+	}
+	
+	test "Intentar agregar al recital Pdpalooza a Joaquín como solista" {
+		joaquin.tocaEnGrupo(false)
+		assert.throwsExceptionWithMessage("No tiene la habilidad para tocar en la presentación", { recitalPdpalooza.agregarCantanteConRestriccion(joaquin) })
+	}
+	
+	test "Subir la habilidad (base) de Lucía a 90. Intentar agregar al recital Pdpalooza a Lucía como solista" {
+		assert.throwsExceptionWithMessage("No cumple la condición de componer al menos una canción", { recitalPdpalooza.agregarCantanteConRestriccion(luciaDeHabilidad90) })
+	}
+	
+	test "Subir la habilidad (base) de Soledad a 80. Intentar agregar al recital Pdpalooza a Soledad" {
+		recitalPdpalooza.agregarCantanteConRestriccion(soledadDeHabilidad80)
+		assert.equals(#{soledadDeHabilidad80}, recitalPdpalooza.cantantes())
 	}
 	/* A PARTIR DE AC� ES LA PRIMERA PARTE */
 	test "Joaqu�n canta en el grupo Pimpinela. Queremos conocer su habilidad" {	

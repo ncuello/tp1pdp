@@ -60,6 +60,7 @@ class Musico{
 	}
 	
 	method tieneLaHabilidadSuficiente() = self.habilidad() > 69
+	
 	method tieneLaHabilidadParaTocarEnELPdpalooza(){
 		if(!self.tieneLaHabilidadSuficiente()){
 			throw new NoTiene70DeHabilidad("el musico no tiene 70 de habilidad")

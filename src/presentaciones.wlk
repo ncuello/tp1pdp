@@ -5,6 +5,7 @@ import musicos.*
 import albumes.*
 import guitarras.*
 import builders.*
+import criterioPresentaciones.*
 
 class Presentacion {
 	const fecha
@@ -34,51 +35,22 @@ class Presentacion {
 		self.validar(_cantante)
 		cantantes.add(_cantante)
 	}
-	method habilidadBaseParaTocar(_cantante) = _cantante.habilidad() > 69 
+	method habilidadBaseParaTocar(_cantante) = _cantante.tieneLaHabilidadSuficiente()
 	
-//	method compusoAlMenosUnaCancion(_cantante) = _cantante.compusoAlMenosUnaCancion()
-//	
-//	method debeInterpretarBienLaCancion(_cantante) = _cantante.interpretaBien(new Cancion("Canción de Alicia en el país", 510, "Quién sabe Alicia, este país no estuvo hecho porque sí. Te vas a ir, vas a salir pero te quedas, ¿dónde más vas a ir? Y es que aquí, sabes el trabalenguas, trabalenguas, el asesino te asesina, y es mucho para ti. Se acabó ese juego que te hacía feliz."))
+	method compusoAlMenosUnaCancion(_cantante) = _cantante.compusoAlMenosUnaCancion()
+		
+	method debeInterpretarBienLaCancion(_cantante, _cancion) = _cantante.interpretaBien(_cancion)
 	
 	method agregarRestriccion(){
 		
 	}
 	method validar(_cantante){
-		if(!self.habilidadBaseParaTocar(_cantante)){
-			self.error("No tiene la habilidad para tocar en la presentación")
-		}
-//		if(!self.compusoAlMenosUnaCancion(_cantante)){
-//			self.error("No cumple la condición de componer al menos una canción")
-//		}
-//		if(!self.debeInterpretarBienLaCancion(_cantante)){
-//			self.error("No cumple la condición de interpretar una canción")
-//		}
-	}
-}
-
-object pdpalooza inherits Presentacion(new Date(15,12,2017),lunaPark,#{})  {
-	var cancionDeAlicia = new CancionesBuilder()
-									.duracion(510)
-									.letra("Quien sabe Alicia, este pais no estuvo hecho porque si. Te vas a ir, vas a salir pero te quedas, �donde mas vas a ir? Y es que aqui, sabes el trabalenguas, trabalenguas, el asesino te asesina, y es mucho para ti. Se acabo ese juego que te hacia feliz.")
-									.titulo("Cancion de Alicia en el pais")
-									.build()
-	method agregarMusico(musico){
-		try{
-			if(musico.tieneLaHabilidadParaTocarEnELPdpalooza() && 
-			   musico.compusoAlMenosUnaCancion() &&
-			   musico.interpretaBien(cancionDeAlicia) 
-			   
-			){
-				cantantes.add(musico)
-				console.println("El Musico se agrego Correctamente al evento")
-			}else{
-				console.println("el Musico no interpreta bien la cancion 'Cancion de Alicia en el pais'")
-			}
-			
-		}catch e : NoTiene70DeHabilidad {
-			console.println(e.getMessage())
-		}catch e : NoTieneAlMenosUnaCancion{
-			console.println(e.getMessage())
-		}
+		const criterioHabilidadBase = new CriterioHabilidadBase(self, _cantante)
+		const criterioCompusoAlMenosUnaCancion = new CriterioCompusoAlMenosUnaCancion(self, _cantante)
+		const criterioInterpretaBienAlicia = new CriterioInterpretaBienUnaCancion(self, _cantante)
+		
+		criterioHabilidadBase.validar()
+		criterioCompusoAlMenosUnaCancion.validar()
+		criterioInterpretaBienAlicia.validar()
 	}
 }

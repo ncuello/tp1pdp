@@ -19,7 +19,7 @@ class Album{
 	
 	method todasLasCancionesSonCortas() = canciones.all {cancion => cancion.esCorta()}
 	method duracion() = canciones.sum {cancion => cancion.duracion()}
-	method cancionMasLarga() = canciones.max {cancion => cancion.largoDeLetra()}
+	method cancionMasLarga() = canciones.max {cancion => criterioLargoDeLetra.comparaPor(cancion)}
 	
 	method buenaVenta() = copiasVendidas > copiasEditadas * 0.75
 	
