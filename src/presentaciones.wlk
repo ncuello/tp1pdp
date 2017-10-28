@@ -25,7 +25,6 @@ class Presentacion {
 	method establecimiento() = establecimiento
 	method cantantes() = cantantes
 	method costoTotal() = cantantes.sum { cantante => cantante.ganancia(self) }
-	method agregarCantante(cantante) = cantantes.add(cantante)
 	method eliminarCantante(cantante) = cantantes.remove(cantante)
 	
 	method esUnicoEnPresentacion(cantante) =
