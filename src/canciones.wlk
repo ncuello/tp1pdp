@@ -54,3 +54,7 @@ object criterioDuracion {
 	method comparaPor(_cancion) = _cancion.duracion()
 }
 
+object criterioLetra {
+	method comparaPor(_cancion) = _cancion.letra()
+}
+
