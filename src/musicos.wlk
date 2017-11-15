@@ -29,7 +29,9 @@ class Musico{
 			return habilidadBase
 		
 	method interpretaBien(cancion) = 
-		self.interpretaBienCancionDeSuAutoria(cancion) || self.habilidad() > 60
+		self.interpretaBienCancionDeSuAutoria(cancion) || self.habilidad() > 60 || self.interpretaBienParticular(cancion)
+		
+	method interpretaBienParticular(cancion)
 		
 	method ganancia(presentacion)
 			 	
@@ -71,7 +73,7 @@ class Musico{
 }
 
 class MusicoDeGrupo inherits Musico{
-	override method interpretaBien(cancion) = super(cancion) || cancion.duracion() > 300  
+	override method interpretaBienParticular(cancion) = cancion.duracion() > 300  
 	override method ganancia(presentacion) =	
 		 if (presentacion.esUnicoEnPresentacion(self))
 		 	return 100
@@ -87,7 +89,7 @@ class VocalistaPopular inherits Musico{
 		}
 	method palabraMagica() = palabraMagica
 		
-	override method interpretaBien(cancion) = super(cancion) || cancion.letraContiene(palabraMagica)
+	override method interpretaBienParticular(cancion) = cancion.letraContiene(palabraMagica)
 	override method ganancia(presentacion) = 
 		if (presentacion.establecimiento().esConcurrido(presentacion.fecha()))
 			return 500
@@ -102,7 +104,7 @@ object luisAlberto inherits Musico(8,0,false){
 	method guitarra(_guitarra) {guitarra = _guitarra}
 	
 	override method habilidad() = 100.min(habilidadBase * guitarra.valor()) 
-	override method interpretaBien(cancion) = true
+	override method interpretaBienParticular(cancion) = true
 	override method ganancia(presentacion) =
 		if (presentacion.fecha() < fechaLimite)
 			return 1000
